@@ -3,7 +3,7 @@
 Small script to run a file watcher on a set of (sub)folders.
 Works as module or from the command line.
 
-When multiple paths are passed a each patch watcher is run in a dedicated thread. 
+When multiple paths are passed each patch-watcher is run in a dedicated thread. 
 
 ```
 main.py C:/path/to/folder
