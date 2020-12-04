@@ -9,12 +9,19 @@ import sys
 import queue
 import threading
 import time
+import logging
 
 import win32net
 import win32file
 import win32con
 import win32netcon
 import win32wnet
+
+logging.basicConfig(
+    filename='file-events.log',
+    format='%(asctime)s %(message)s',
+    level=logging.INFO,
+    datefmt="%Y-%m-%d %H:%M:%S")
 
 ACTIONS = {
     1: "Created",
@@ -37,9 +44,9 @@ while True:
     for drive in _drives:
         if drive["local"] == "T:":
             try:
-                print(drive["local"], "=>", drive["remote"])
+                logging.info(f"{drive['local']} mapped to {drive['remote']}")
                 if not os.access(drive["local"], os.R_OK):
-                    print(drive["local"], "not accessible, deleting and remapping drive")
+                    logging.info(f"{drive['local']} not accessible, deleting and remapping drive")
                     os.system("cmd /c net use T: /delete")
                     win32wnet.WNetAddConnection2(
                         win32netcon.RESOURCETYPE_DISK,
@@ -51,7 +58,7 @@ while True:
                         0,
                     )
             finally:
-                print(drive["local"], "found and is readable")
+                logging.info(f"{drive['local']} is accessible. Happy watching.")
     if not resume:
         break
 
@@ -92,7 +99,7 @@ def watch_path(path_to_watch, include_subdirectories=True):
             else:
                 file_type = "file"
             if action == 1 and file_extention.lower() in [".gef", ".ags"]:
-                print(full_filename, ACTIONS.get(action, "Unknown"))
+                logging.info(full_filename + ACTIONS.get(action, "Unknown"))
                 yield (file_type, full_filename, ACTIONS.get(action, "Unknown"))
 
 
@@ -118,9 +125,10 @@ if __name__ == "__main__":
         path_to_watch = sys.argv[1].split(",") or PATH_TO_WATCH
     except:
         path_to_watch = PATH_TO_WATCH
+
     path_to_watch = [os.path.abspath(p) for p in path_to_watch]
 
-    print("Watching %s at %s" % (", ".join(path_to_watch), time.asctime()))
+    logging.info(f"Watching {', '.join(path_to_watch)}")
 
     files_changed = queue.Queue()
 
