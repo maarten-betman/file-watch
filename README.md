@@ -6,7 +6,7 @@ Works as module or from the command line.
 When multiple paths are passed each patch-watcher is run in a dedicated thread. 
 
 ```
-main.py C:/path/to/folder
+python main.py C:/path/to/folder
 ```
 
 log file is created to log file changes. Currect code filters on gef and ags files being created.
