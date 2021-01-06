@@ -47,7 +47,7 @@
 #MEASUREMENTVAR= 34, 0.792721, degrees, [2781.4][mV] zero measurement inclination EW before penetration test
 #MEASUREMENTVAR= 35, 0.009077, degrees, [2769.1][mV] zero measurement inclination EW after penetration test
 #PROCEDURECODE= GEF-CPT-Report, 1, 1, 0, -
-#TESTID= CPT-PRE-C8A-07-test
+#TESTID= CPT-PRE-C8A-07-test-2
 #PROJECTNAME= LAND CPT FOR P-TEKONG AREA-A AND C
 #REPORTDATAFORMAT= E7.6 E7.6 E7.6 E7.6 E7.6 E7.6 E7.6 E7.6
 #STARTDATE= 2020, 12, 31

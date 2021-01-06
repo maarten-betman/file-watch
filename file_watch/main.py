@@ -104,7 +104,14 @@ def watch_path(path_to_watch, include_subdirectories=True):
             if action == 1 and file_extention.lower() in [".gef", ".ags"]:
                 logging.info(full_filename + ACTIONS.get(action, "Unknown"))
                 if file_extention.lower() == ".gef":
-                    post_gef_file(Path(full_filename))
+                    r = post_gef_file(Path(full_filename))
+                    data = r.json()
+                    if r.status_code == 409:
+                        logging.info(data['detail'])
+                    elif r.status_code == 200:
+                        logging.info(data['message'])
+                    else:
+                        logging.info("failed")
                 if file_extention.lower() == ".ags":
                     pass
                 yield (file_type, full_filename, ACTIONS.get(action, "Unknown"))
