@@ -130,7 +130,7 @@ class Watcher(threading.Thread):
             self.results_queue.put(result)
 
 
-if __name__ == "__main__":
+def main():
     PATH_TO_WATCH = [
         r"T:\08_General\Tekong_Project\0.1 Soil Investigation\(001) Progress Report"
     ]
