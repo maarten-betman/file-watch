@@ -10,6 +10,7 @@ import queue
 import threading
 import time
 import logging
+from pathlib import Path
 
 import win32net
 import win32file
@@ -17,8 +18,10 @@ import win32con
 import win32netcon
 import win32wnet
 
+from file_watch.handle_gef import post_gef_file
+
 logging.basicConfig(
-    filename='file-events.log',
+    filename='../file-events.log',
     format='%(asctime)s %(message)s',
     level=logging.INFO,
     datefmt="%Y-%m-%d %H:%M:%S")
@@ -100,6 +103,10 @@ def watch_path(path_to_watch, include_subdirectories=True):
                 file_type = "file"
             if action == 1 and file_extention.lower() in [".gef", ".ags"]:
                 logging.info(full_filename + ACTIONS.get(action, "Unknown"))
+                if file_extention.lower() == ".gef":
+                    post_gef_file(Path(full_filename))
+                if file_extention.lower() == ".ags":
+                    pass
                 yield (file_type, full_filename, ACTIONS.get(action, "Unknown"))
 
 
